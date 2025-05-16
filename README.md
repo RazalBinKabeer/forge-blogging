@@ -24,4 +24,9 @@ A blog platform built from scratch with no frameworks. Built by hand, the hard w
 - [x] Git initialized
 - [x] README created
 
+## 📆 Day 2 Progress
+
+- [x] HTML Structure
+- [x] CSS Styling
+
 More coming soon 🔥
