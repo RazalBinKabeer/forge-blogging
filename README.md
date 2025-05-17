@@ -29,4 +29,10 @@ A blog platform built from scratch with no frameworks. Built by hand, the hard w
 - [x] HTML Structure
 - [x] CSS Styling
 
+## 📆 Day 3 Progress
+
+- [x] 2 Markdown files in /posts/
+- [x] main.js dynamically loads post data
+- [x] Posts render into real homepage
+
 More coming soon 🔥
