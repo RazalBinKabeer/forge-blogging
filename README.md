@@ -35,4 +35,10 @@ A blog platform built from scratch with no frameworks. Built by hand, the hard w
 - [x] main.js dynamically loads post data
 - [x] Posts render into real homepage
 
+## 📆 Day 4 Progress
+
+- [x] server.js file that serves entire site
+- [x] Browser works when visiting http://localhost:3000
+- [x] Posts still load (via JS + fetch)
+
 More coming soon 🔥
