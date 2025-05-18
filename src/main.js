@@ -1,4 +1,4 @@
-const postFiles = ["post1.md", "post2.md"];
+const postFiles = ["post1.md", "post2.md", "post3.md", "post4.md"];
 
 const loadPosts = async () => {
   const container = document.getElementById("posts");
