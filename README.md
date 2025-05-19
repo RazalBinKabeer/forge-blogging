@@ -41,4 +41,10 @@ A blog platform built from scratch with no frameworks. Built by hand, the hard w
 - [x] Browser works when visiting http://localhost:3000
 - [x] Posts still load (via JS + fetch)
 
+## 📆 Day 5 Progress
+
+- [x] Update server.js with routing logic
+- [x] GET /api/posts return real data from Markdown
+- [x] Frontend loads blog posts via JSON
+
 More coming soon 🔥

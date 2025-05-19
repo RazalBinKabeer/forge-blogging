@@ -1,18 +1,10 @@
-const postFiles = ["post1.md", "post2.md", "post3.md", "post4.md"];
-
 const loadPosts = async () => {
   const container = document.getElementById("posts");
 
-  for (const file of postFiles) {
-    const res = await fetch(`posts/${file}`);
-    const text = await res.text();
+  const res = await fetch(`/api/posts`);
+  const posts = await res.json();
 
-    const lines = text.split("\n");
-    console.log("lines", lines);
-    const title = lines[0].replace(/^# /, "");
-    const author = lines[2];
-    const summary = lines[3] || "";
-
+  posts.forEach(({ title, author, summary }) => {
     const postHTML = `
       <article class="post">
         <h2>${title}</h2>
@@ -23,9 +15,8 @@ const loadPosts = async () => {
         </a>
       </article>
     `;
-
     container.innerHTML += postHTML;
-  }
+  });
 };
 
 window.addEventListener("DOMContentLoaded", loadPosts);

@@ -12,7 +12,34 @@ const mimeTypes = {
   ".json": "application/json",
 };
 
+const getPosts = () => {
+  const postDir = path.join(__dirname, "posts");
+  const files = fs.readdirSync(postDir);
+
+  return files.map((file) => {
+    const raw = fs.readFileSync(path.join(postDir, file), "utf-8");
+    const lines = raw.split("\n");
+
+    return {
+      title: lines[0].replace(/^# /, ""),
+      author: lines[2].trim(),
+      summary: lines[3] || "",
+      slug: file.replace(".md", ""),
+    };
+  });
+};
+
 const server = http.createServer((req, res) => {
+  const { url, method } = req;
+
+  // Handle API Route
+  if (url === "/api/posts" && method === "GET") {
+    const posts = getPosts();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(posts));
+    return;
+  }
+
   let filePath = "." + req.url;
 
   if (filePath === "./") filePath = "./index.html";
