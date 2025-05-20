@@ -29,28 +29,45 @@ const getPosts = () => {
   });
 };
 
-const server = http.createServer((req, res) => {
-  const { url, method } = req;
+const allowedDirs = ["public", "posts", "src"];
 
-  // Handle API Route
-  if (url === "/api/posts" && method === "GET") {
+const server = http.createServer((req, res) => {
+  const { method } = req;
+  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+  const urlPath = parsedUrl.pathname;
+
+  // API Route
+  if (urlPath === "/api/posts" && method === "GET") {
     const posts = getPosts();
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(posts));
     return;
   }
 
-  let filePath = "." + req.url;
-
+  // Serve static files
+  let filePath = "." + urlPath;
   if (filePath === "./") filePath = "./index.html";
 
   const ext = path.extname(filePath);
   const contentType = mimeTypes[ext] || "application/octet-stream";
 
+  const isAllowed =
+    fs.existsSync(filePath) &&
+    (fs.statSync(filePath).isFile() ||
+      filePath === "./index.html" ||
+      filePath === "./post.html" ||
+      allowedDirs.some((dir) => filePath.startsWith(`./${dir}/`)));
+
+  if (!isAllowed) {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("404 - Not Found");
+    return;
+  }
+
   fs.readFile(filePath, (err, content) => {
     if (err) {
-      res.writeHead(404, { "Content-Type": "text/plain" });
-      res.end("404 - Not Found");
+      res.writeHead(500, { "Content-Type": "text/plain" });
+      res.end("500 - Server Error");
     } else {
       res.writeHead(200, { "Content-Type": contentType });
       res.end(content);

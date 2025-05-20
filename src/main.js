@@ -4,13 +4,13 @@ const loadPosts = async () => {
   const res = await fetch(`/api/posts`);
   const posts = await res.json();
 
-  posts.forEach(({ title, author, summary }) => {
+  posts.forEach(({ title, author, summary, slug }) => {
     const postHTML = `
       <article class="post">
         <h2>${title}</h2>
         <p class="meta">${author}</p>
         <p class="summary">${summary}</p>
-        <a href="#" class="read-more">
+        <a href="/post.html?slug=${slug}" class="read-more">
           Read more →
         </a>
       </article>

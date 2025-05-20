@@ -46,6 +46,11 @@ A blog platform built from scratch with no frameworks. Built by hand, the hard w
 - [x] Update server.js with routing logic
 - [x] GET /api/posts return real data from Markdown
 - [x] Frontend loads blog posts via JSON
--
+
+## 📆 Day 6 Progress
+
+- [x] post.html with post template
+- [x] post.js loads a post from Markdown by slug
+- [x] main.js links to individual post pages
 
 More coming soon 🔥
