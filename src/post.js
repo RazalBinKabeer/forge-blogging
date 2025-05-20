@@ -1,29 +1,27 @@
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("slug");
 
-console.log("slug", slug);
+if (!slug) {
+  document.getElementById("content").textContent = "❌ No slug provided.";
+  throw new Error("Slug not found in URL");
+}
 
-const loadPost = async () => {
-  const res = await fetch(`/posts/${slug}.md`);
-  if (!res.ok) {
-    document.getElementById("post").innerHTML = "<h1>Post not found</h1>";
-    return;
-  }
+fetch(`/posts/${slug}.md`)
+  .then((res) => {
+    if (!res.ok) throw new Error("Post not found");
+    return res.text();
+  })
+  .then((md) => {
+    const lines = md.split("\n");
+    const title = lines[0].replace(/^# /, "");
+    const author = lines[2];
+    const body = lines.slice(3).join("\n");
 
-  const text = await res.text();
-  const lines = text.split("\n");
-
-  const title = lines[0].replace(/^# /, "");
-  const author = lines[2].trim();
-  const body = lines.slice(3).join("\n");
-
-  document.title = title;
-
-  document.getElementById("post").innerHTML = `
-    <h1>${title}</h1>
-    <p class="meta">${author}</p>
-    <div class="body">${body.replace(/\n/g, "<br>")}</div>    
-    `;
-};
-
-window.addEventListener("DOMContentLoaded", loadPost);
+    document.getElementById("title").textContent = title;
+    document.getElementById("author").textContent = `By ${author}`;
+    document.getElementById("content").textContent = body;
+  })
+  .catch((err) => {
+    document.getElementById("content").textContent = "❌ Could not load post.";
+    console.error(err);
+  });

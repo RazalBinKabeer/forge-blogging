@@ -53,4 +53,10 @@ A blog platform built from scratch with no frameworks. Built by hand, the hard w
 - [x] post.js loads a post from Markdown by slug
 - [x] main.js links to individual post pages
 
+## 📆 Day 7 Progress
+
+- [x] Query Parameters
+- [x] fetching + rendering dynamic content
+- [x] handling 404s in the frontend
+
 More coming soon 🔥
